@@ -1,9 +1,13 @@
 # docker-dns-dhcp-ntp
 Docker image with bind9, isc-dhcp and ntp
 
-The docker-compose.yml ist prepared to be used with [portainer](https://www.portainer.io) Stack-Editor.
+The docker-compose.yml ist prepared to be used with [portainer.io](https://www.portainer.io) Stack-Editor.
 
-You only have to define ti environment variables:
+You only have to define two environment variables:
 
-* ${BASE_DIR}
-* ${BINDS}
+* BASE_DIR
+* BINDS
+
+Example:
+  BASE_DIR=/home/docker
+  BINDS=/binds
