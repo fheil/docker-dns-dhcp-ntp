@@ -1,0 +1,58 @@
+---
+###
+# dont't forget to define environment variables ${BASE_DIR} and ${BINDS}
+###
+version: '3.5'
+
+services:
+  bind9:
+    container_name: BIND_9
+    image: internetsystemsconsortium/bind9:9.16
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+      # activate this only with network mode bridge, for host it is not need
+      - "127.0.0.1:953:953/tcp"
+    volumes:
+      - type: bind
+        source: ${BASE_DIR}/${BINDS}/isc-bind9/etc/bind
+        target: /etc/bind
+      - type: bind
+        source: ${BASE_DIR}/${BINDS}/isc-bind9/var/cache/bind
+        target: /var/cache/bind
+      - type: bind
+        source: ${BASE_DIR}/${BINDS}/isc-bind9/var/lib/bind
+        target: /var/lib/bind
+      - type: bind
+        source: ${BASE_DIR}/${BINDS}/isc-bind9/var/log
+        target: /var/log
+    restart: always
+    network_mode: bridge      # for me host although worked, F. Heil 20220125
+
+  isc-dhcp:
+    container_name: isc-dhcp
+    image: networkboot/dhcpd
+    volumes:
+      - type: bind
+        source: ${BASE_DIR}/${BINDS}/isc-dhcp/etc/dhcp
+        target: /data
+    restart: always
+    network_mode: host
+
+  ntp:
+    container_name: ntp
+    image: cturra/ntp:latest
+    ports:
+      - 123:123/udp
+    tmpfs:
+      - /etc/chrony:rw,mode=1750
+      - /run/chrony:rw,mode=1750
+      - /var/lib/chrony:rw,mode=1750
+    restart: always
+    read_only: true
+    environment:
+      # - NTP_SERVERS=time.cloudflare.com
+      # - NTP_SERVERS="0.de.pool.ntp.org,1.de.pool.ntp.org, \
+      #                2.de.pool.ntp.org,3.de.pool.ntp.org"
+      - NTP_SERVERS="0.de.pool.ntp.org,1.de.pool.ntp.org,192.168.0.254"
+      - LOG_LEVEL=0
