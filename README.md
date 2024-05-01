@@ -9,5 +9,6 @@ You only have to define two environment variables:
 * BINDS
 
 Example:
-  BASE_DIR=/home/docker
+
+  BASE_DIR=/<where your docker resides>/docker
   BINDS=/binds
