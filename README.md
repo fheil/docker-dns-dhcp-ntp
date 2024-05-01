@@ -1,4 +1,4 @@
-# docker: dns-dhcp-ntp
+# docker: dns-dhcp-ntp (for portainer stack editor)
 Docker image with bind9, isc-dhcp and ntp
 
 The docker-compose.yml is prepared to be used with [portainer.io](https://www.portainer.io) Stack-Editor.
