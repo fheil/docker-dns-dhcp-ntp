@@ -1,6 +1,8 @@
 ---
 ###
-# dont't forget to define environment variables ${BASE_DIR} and ${BINDS}
+# dont't forget to define environment variables 
+# ${BASE_DIR} 
+# ${BINDS}
 ###
 version: '3.5'
 
