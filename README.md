@@ -10,5 +10,5 @@ You only have to define two environment variables:
 
 Example:
 
-  BASE_DIR=/<where your docker resides>/docker
+  BASE_DIR=/foo/docker
   BINDS=/binds
